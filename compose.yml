@@ -1,60 +1,96 @@
 ---
 services:
+
   db:
-    image: shaikmustafa/arshad:db
+    image: siva1824/python-microservices:dbimage
     deploy:
       replicas: 1
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 512M
+        reservations:
+          cpus: "0.25"
+          memory: 256M
     ports:
       - "3306:3306"
     networks:
-      - mynetwork
+      - shiva
 
   auth_service:
-    image: shaikmustafa/arshad:auth
+    image: siva1824/python-microservices:authimage
     deploy:
       replicas: 1
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 512M
+        reservations:
+          cpus: "0.25"
+          memory: 256M
     ports:
       - "5001:5001"
     networks:
-      - mynetwork
+      - shiva
     depends_on:
       - db
-    
 
   book_service:
-    image: shaikmustafa/arshad:book
+    image: siva1824/python-microservices:bookimage
     deploy:
       replicas: 1
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 512M
+        reservations:
+          cpus: "0.25"
+          memory: 256M
     ports:
       - "5002:5002"
     networks:
-      - mynetwork
+      - shiva
     depends_on:
       - db
+
   borrow_service:
-    image: shaikmustafa/arshad:borrow
+    image: siva1824/python-microservices:borrowimage
     deploy:
       replicas: 1
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 512M
+        reservations:
+          cpus: "0.25"
+          memory: 256M
     ports:
       - "5003:5003"
     networks:
-      - mynetwork
+      - shiva
     depends_on:
       - db
 
   frontend:
-    image: shaikmustafa/arshad:frontend
+    image: siva1824/python-microservices:appimage
     deploy:
       replicas: 1
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 512M
+        reservations:
+          cpus: "0.25"
+          memory: 256M
     ports:
       - "5000:5000"
     networks:
-      - mynetwork
+      - shiva
     depends_on:
       - auth_service
       - book_service
       - borrow_service
 
 networks:
-  mynetwork:
+  shiva:
     driver: bridge
