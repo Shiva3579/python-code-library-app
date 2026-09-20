@@ -93,4 +93,4 @@ services:
 
 networks:
   shiva:
-    driver: bridge
+    driver: overlay
